@@ -50,3 +50,19 @@ Sep 16, 2026 10:04:00 PM repl.banking.util.BankLogger error
 SEVERE: Login Failed for 1
 Sep 16, 2026 10:04:00 PM repl.banking.util.BankLogger info
 INFO: Login Succeeded for 1
+Sep 17, 2026 9:15:06 AM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
+Sep 17, 2026 9:16:22 AM repl.banking.util.BankLogger info
+INFO: Account registration Succeeded for 5
+Sep 17, 2026 9:16:34 AM repl.banking.util.BankLogger error
+SEVERE: Deposit failed: Withdraw amount exceeds account balance.
+Sep 17, 2026 9:16:58 AM repl.banking.util.BankLogger info
+INFO: Deposit successful. Account ID: 5 | Amount: 10000.0
+Sep 17, 2026 9:17:09 AM repl.banking.util.BankLogger error
+SEVERE: Deposit failed: Destination account does not exist.
+Sep 17, 2026 9:17:15 AM repl.banking.util.BankLogger info
+INFO: Transfer successful. Source Account ID: 5 | Destination Account ID: 1 | Amount: 10.0
+Sep 17, 2026 9:17:40 AM repl.banking.util.BankLogger info
+INFO: Withdraw successful. Account ID: 5 | Amount: 9900.0
+Sep 17, 2026 9:17:51 AM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1

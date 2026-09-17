@@ -19,7 +19,7 @@ public class BankRepl {
         System.out.println("Enter 'login' to login to an existing acccount.");
         System.out.println("Enter 'register' to register a new acccount.");
         System.out.println("Enter 'help' to see available commands.");
-        
+
         while(loggedIn == null) {
             System.out.print("\n> ");
 
@@ -34,6 +34,7 @@ public class BankRepl {
                 switch(command) {
                     case "login" -> handleLogin();
                     case "register" -> handleRegister();
+                    case "help" -> handle(command);
                     default -> System.out.println("Unknown command.");
                 }
 
@@ -169,7 +170,7 @@ public class BankRepl {
             System.out.println("logout - Logout of account");
             System.out.println("check - Check account balance");
             System.out.println("withdraw - Withdraw money from your account");
-            System.out.println("deposit - Deposit money to your");
+            System.out.println("deposit - Deposit money to your account");
             System.out.println("transfer - Transfer money from one account to another");
             System.out.println("history - View last five transactions");
         }

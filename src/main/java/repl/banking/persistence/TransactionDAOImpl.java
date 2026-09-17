@@ -11,6 +11,24 @@ import java.util.List;
 import repl.banking.domain.Transaction;
 
 public class TransactionDAOImpl implements TransactionDAO {
+    private static final String CREATE_TABLE_SQL = """
+        CREATE TABLE IF NOT EXISTS transaction (
+            transaction_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            account_id INTEGER NOT NULL,
+            amount NUMERIC(12, 2) NOT NULL,
+            type VARCHAR(20) NOT NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            destination_account_id INTEGER,
+
+            CONSTRAINT fk_transaction_account 
+                FOREIGN KEY (account_id) 
+                REFERENCES account(account_id),
+
+            CONSTRAINT fk_transaction_destination
+                FOREIGN KEY (destination_account_id)
+                REFERENCES account(account_id)
+        );
+        """;
     private static final String INSERT_SQL_NORMAL = "INSERT INTO transaction (account_id, amount, type) VALUES (?, ?, ?);";
     private static final String INSERT_SQL_TRANSFER = "INSERT INTO transaction (account_id, amount, type, destination_account_id) VALUES (?, ?, ?, ?);";
     private static final String FIND_LAST_FIVE =
@@ -19,6 +37,18 @@ public class TransactionDAOImpl implements TransactionDAO {
     "WHERE account_id = ? OR destination_account_id = ? " +
     "ORDER BY created_at DESC " +
     "LIMIT 5";
+
+    public TransactionDAOImpl() {
+        initializeSchema();
+    }
+    private void initializeSchema() {
+        try (Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
+                PreparedStatement statement = connection.prepareStatement(CREATE_TABLE_SQL)) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw databaseError("Could not initialize database schema", e);
+        }
+    }
 
 
     // ADD TRANSACTION

@@ -9,9 +9,28 @@ import java.sql.SQLException;
 import repl.banking.domain.Account;
 
 public class AccountDAOImpl implements AccountDAO {
+    private static final String CREATE_TABLE_SQL = """
+        CREATE TABLE IF NOT EXISTS account (
+            account_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            pin VARCHAR(255) NOT NULL,
+            balance NUMERIC(12, 2) NOT NULL DEFAULT 0.00
+        );
+        """;
     private static final String INSERT_SQL = "INSERT INTO account (pin, balance) VALUES (?, ?)";
     private static final String FIND_BY_ID_SQL = "SELECT account_id, pin, balance FROM account WHERE account_id = ?";
     private static final String UPDATE_SQL = "UPDATE account SET balance = ? WHERE account_id = ?";
+
+    public AccountDAOImpl() {
+        initializeSchema();
+    }
+    private void initializeSchema() {
+        try (Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
+                PreparedStatement statement = connection.prepareStatement(CREATE_TABLE_SQL)) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw databaseError("Could not initialize database schema", e);
+        }
+    }
 
     // ADD ACCOUNT
     @Override
