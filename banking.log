@@ -44,3 +44,9 @@ Sep 16, 2026 7:36:49 PM repl.banking.util.BankLogger info
 INFO: Login Succeeded for 1
 Sep 16, 2026 7:37:00 PM repl.banking.util.BankLogger info
 INFO: Login Succeeded for 3
+Sep 16, 2026 9:58:14 PM repl.banking.util.BankLogger info
+INFO: Account registration Succeeded for 1
+Sep 16, 2026 10:04:00 PM repl.banking.util.BankLogger error
+SEVERE: Login Failed for 1
+Sep 16, 2026 10:04:00 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
