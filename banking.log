@@ -1,0 +1,46 @@
+Sep 16, 2026 7:11:15 PM repl.banking.util.BankLogger error
+SEVERE: Login Failed for 1
+Sep 16, 2026 7:11:26 PM repl.banking.util.BankLogger error
+SEVERE: Login Failed for 1
+Sep 16, 2026 7:12:13 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
+Sep 16, 2026 7:13:00 PM repl.banking.util.BankLogger error
+SEVERE: Login Failed for 12342
+Sep 16, 2026 7:13:06 PM repl.banking.util.BankLogger error
+SEVERE: Login Failed for 1
+Sep 16, 2026 7:13:11 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
+Sep 16, 2026 7:21:03 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
+Sep 16, 2026 7:21:08 PM repl.banking.util.BankLogger error
+SEVERE: Deposit failed: Amount less than zero.
+Sep 16, 2026 7:24:21 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
+Sep 16, 2026 7:24:31 PM repl.banking.util.BankLogger error
+SEVERE: Deposit failed: Amount less than zero.
+Sep 16, 2026 7:25:58 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
+Sep 16, 2026 7:26:05 PM repl.banking.util.BankLogger error
+SEVERE: Deposit failed: Transfer amount exceeds source account balance.
+Sep 16, 2026 7:27:04 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
+Sep 16, 2026 7:27:11 PM repl.banking.util.BankLogger error
+SEVERE: Deposit failed: Destination account does not exist.
+Sep 16, 2026 7:30:31 PM repl.banking.util.BankLogger info
+INFO: Account registration Succeeded for 4
+Sep 16, 2026 7:30:48 PM repl.banking.util.BankLogger error
+SEVERE: Deposit failed: Withdraw amount exceeds account balance.
+Sep 16, 2026 7:30:59 PM repl.banking.util.BankLogger info
+INFO: Deposit successful. Account ID: 4 | Amount: 78.0
+Sep 16, 2026 7:31:03 PM repl.banking.util.BankLogger info
+INFO: Deposit successful. Account ID: 4 | Amount: 2.0
+Sep 16, 2026 7:31:12 PM repl.banking.util.BankLogger info
+INFO: Transfer successful. Source Account ID: 4 | Destination Account ID: 3 | Amount: 40.0
+Sep 16, 2026 7:32:06 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 4
+Sep 16, 2026 7:35:07 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
+Sep 16, 2026 7:36:49 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 1
+Sep 16, 2026 7:37:00 PM repl.banking.util.BankLogger info
+INFO: Login Succeeded for 3

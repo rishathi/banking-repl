@@ -13,20 +13,24 @@ import repl.banking.domain.Transaction;
 public class TransactionDAOImpl implements TransactionDAO {
     private static final String INSERT_SQL_NORMAL = "INSERT INTO transaction (account_id, amount, type) VALUES (?, ?, ?);";
     private static final String INSERT_SQL_TRANSFER = "INSERT INTO transaction (account_id, amount, type, destination_account_id) VALUES (?, ?, ?, ?);";
-    // FIXME: for FIND_LAST_FIVE, include destination_account_id = input_id also
-    private static final String FIND_LAST_FIVE = "SELECT transaction_id, account_id, amount, type, created_at, destination_account_id FROM transaction ORDER BY created_at LIMIT 5";
+    private static final String FIND_LAST_FIVE =
+    "SELECT transaction_id, account_id, amount, type, created_at, destination_account_id " +
+    "FROM transaction " +
+    "WHERE account_id = ? OR destination_account_id = ? " +
+    "ORDER BY created_at DESC " +
+    "LIMIT 5";
+
 
     // ADD TRANSACTION
     @Override
-    public int addTransaction(Transaction transaction) {
+    public int addTransaction(Connection conn, Transaction transaction) {
         String sql = transaction.getType().equals("TRANSFER")
             ? INSERT_SQL_TRANSFER
             : INSERT_SQL_NORMAL;
-        try (Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
-                PreparedStatement statement = connection.prepareStatement(
-                    sql,
-                    Statement.RETURN_GENERATED_KEYS
-                )) {
+        try (PreparedStatement statement = conn.prepareStatement(
+                sql,
+                Statement.RETURN_GENERATED_KEYS
+            )) {
             statement.setInt(1, transaction.getAccountId());
             statement.setDouble(2, transaction.getAmount());
             statement.setString(3, transaction.getType());
@@ -54,14 +58,17 @@ public class TransactionDAOImpl implements TransactionDAO {
     // FIND FIVE MOST RECENT TRANSACTIONS
     @Override
     public List<Transaction> findLastFive(int accountId) {
-        List<Transaction> students = new ArrayList<>();
+        List<Transaction> transactions = new ArrayList<>();
         try (Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
-                PreparedStatement statement = connection.prepareStatement(FIND_LAST_FIVE);
-                ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                students.add(mapTransactions(resultSet));
+                PreparedStatement statement = connection.prepareStatement(FIND_LAST_FIVE)) {
+            statement.setInt(1, accountId);
+            statement.setInt(2, accountId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    transactions.add(mapTransactions(resultSet));
+                }
             }
-            return students;
+            return transactions;
         } catch (SQLException e) {
             throw databaseError("Could not list transactions", e);
         }
@@ -81,7 +88,7 @@ public class TransactionDAOImpl implements TransactionDAO {
                 resultSet.getInt("account_id"),
                 resultSet.getDouble("amount"),
                 resultSet.getString("type"),
-                resultSet.getInt("destinationAccountId"),
+                resultSet.getInt("destination_account_id"),
                 resultSet.getString("created_at")
         );
     }

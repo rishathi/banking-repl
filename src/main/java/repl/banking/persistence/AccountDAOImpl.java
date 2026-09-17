@@ -27,11 +27,11 @@ public class AccountDAOImpl implements AccountDAO {
 
             // Get generated key
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                int accountId = generatedKeys.getInt(1);
-                return accountId;
+                if (generatedKeys.next()) {
+                    int accountId = generatedKeys.getInt(1);
+                    return accountId;
+                }
             }
-        }
 
         } catch (SQLException e) {
             throw databaseError("Could not add account", e);
@@ -69,9 +69,8 @@ public class AccountDAOImpl implements AccountDAO {
 
     // UPDATE ACCOUNT BALANCE
     @Override 
-    public Account updateBalance(Account account, Double newBalance) {
-        try (Connection connection = ConnectionFactory.getConnectionFactory().getConnection();
-                PreparedStatement statement = connection.prepareStatement(UPDATE_SQL)) {
+    public Account updateBalance(Connection conn, Account account, Double newBalance) {
+        try (PreparedStatement statement = conn.prepareStatement(UPDATE_SQL)) {
             statement.setDouble(1, newBalance); // balance
             statement.setInt(2, account.getAccountId()); // account id
             if(statement.executeUpdate() == 1) {

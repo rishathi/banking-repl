@@ -16,10 +16,11 @@ public class BankRepl {
 
     private void login() {
         System.out.println("Welcome to the Bank!\n");
+        System.out.println("Enter 'login' to login to an existing acccount.");
+        System.out.println("Enter 'register' to register a new acccount.");
+        System.out.println("Enter 'help' to see available commands.");
+        
         while(loggedIn == null) {
-            System.out.println("Enter 'login' to login to an existing acccount.");
-            System.out.println("Enter 'register' to register a new acccount.");
-            System.out.println("Enter 'help' to see available commands.");
             System.out.print("\n> ");
 
             String command = sc.nextLine();
@@ -33,6 +34,7 @@ public class BankRepl {
                 switch(command) {
                     case "login" -> handleLogin();
                     case "register" -> handleRegister();
+                    default -> System.out.println("Unknown command.");
                 }
 
             } catch (IllegalArgumentException e) {
@@ -53,9 +55,6 @@ public class BankRepl {
         if(account != null) {
             loggedIn = account;
             System.out.println("Logged into account: " + accountId);
-        }
-        else {
-            System.out.println("Unable to log into account: " + accountId);
         }
     }
 
@@ -80,20 +79,27 @@ public class BankRepl {
     }
 
     public void run() {
-        login();
-        while(loggedIn != null) {
-            System.out.print("\n> ");
-            String command = sc.nextLine();
-            command.trim();
-
-            if(command.equals("exit")) {
+        while(true) {
+            login();
+            // user chose "exit" from the login screen
+            if (loggedIn == null) {
                 return;
             }
 
-            try {
-                handle(command);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error: " + e.getMessage());
+            while(loggedIn != null) {
+                System.out.print("\n> ");
+                String command = sc.nextLine();
+                command.trim();
+
+                if(command.equals("exit")) {
+                    return;
+                }
+
+                try {
+                    handle(command);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: " + e.getMessage());
+                }
             }
         }
     }
@@ -117,8 +123,6 @@ public class BankRepl {
                     loggedIn = newAccount;
                     System.out.println("Withdraw successful.");
                     System.out.println("Current balance: " + loggedIn.getBalance());
-                } else {
-                    System.out.println("Withdraw failed. Check account balance.");
                 }
             }
             case "deposit" -> {
@@ -145,13 +149,14 @@ public class BankRepl {
                     loggedIn = newAccount;
                     System.out.println("Transfer successful.");
                     System.out.println("Current balance: " + loggedIn.getBalance());
-                } else {
-                    System.out.println("Deposit failed.");
                 }
             }
             case "history" -> {
                 bankingService.lastFiveTransactions(loggedIn)
                     .forEach(System.out::println);
+            }
+            default -> {
+                System.out.println("Unknown command.");
             }
         }
     }

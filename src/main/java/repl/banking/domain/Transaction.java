@@ -57,7 +57,7 @@ public class Transaction {
         if(type.equals("TRANSFER")) {
             return String.format("Transaction ID: %d | Source Account: %d | Destination Account: %d | Amount: %.2f | Type: %s | Created At: %s", transactionId, accountId, destinationAccountId, amount, type, createdAt);
         }
-        return String.format("Transaction ID: %d | Source Account: %d | Amount: %.2f | Type: %s | Created At: %s", transactionId, accountId, amount, type, createdAt);
+        return String.format("Transaction ID: %d | Source Account: %d | Destination Account: - | Amount: %.2f | Type: %s | Created At: %s", transactionId, accountId, amount, type, createdAt);
     }
 
 }
